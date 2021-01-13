@@ -8,8 +8,8 @@
      http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!--    数据库连接池以及事务管理都交给Spring容器来完成-->
-    <!--    扫描包-->
-    <context:component-scan base-package="com.mango.edu"/>
+    <!--    扫描包 只需要扫service和dao就可以了 不用扫controller  因为mvc框架已经扫了-->
+    <context:component-scan base-package="com.mango.edu.mapper"/>
     <!--加载数据库连接配置文件-->
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
@@ -19,14 +19,6 @@
         <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
     </bean>
-
-    <!--    事务管理-->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
-
-    <!--    事务管理注解驱动-->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
